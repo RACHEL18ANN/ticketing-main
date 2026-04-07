@@ -1,0 +1,93 @@
+/* ===== ToastNotif.css ===== */
+
+.global-toast-container {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 100000;
+    min-width: 320px;
+    pointer-events: auto;
+    font-family: 'Poppins', sans-serif;
+}
+
+.toast-banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 14px 18px 24px 18px; 
+    border-radius: 10px; 
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    gap: 12px;
+    overflow: hidden; 
+    background: #00c81b; /* Main Success Green */
+    color: white;
+    animation: toastSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* 1. THE PERMANENT TRAY (Darker Shadow Base) */
+.toast-banner::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.2); /* Darker green shelf base */
+    z-index: 1;
+}
+
+/* 2. THE LIGHT INDICATOR (The Countdown Bar) */
+.toast-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 10px;
+    width: 100%;
+    /* Light/White highlight that indicates remaining time */
+    background: rgba(255, 255, 255, 0.45); 
+    z-index: 2;
+    transform-origin: left;
+    /* This animation makes it shrink from 100% to 0% */
+    animation: toastCountdown 5s linear forwards; 
+}
+
+/* Icons & Content */
+.toast-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.toast-msg-text {
+    font-size: 18px;
+    font-weight: 500;
+    flex: 1;
+}
+
+/* Close Button */
+.toast-close-x {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    z-index: 3;
+}
+
+/* Animations */
+@keyframes toastSlideIn {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* SHRINKING EFFECT: Start full (scale 1) and go to empty (scale 0) */
+@keyframes toastCountdown {
+    from { 
+        transform: scaleX(1); 
+    }
+    to { 
+        transform: scaleX(0); 
+    }
+}

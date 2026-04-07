@@ -1,0 +1,309 @@
+/* Settings.css */
+
+/* Main Page Container */
+.settings-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 1. The Diagonal Split Background */
+.settings-bg-split {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Matches the red top-left and dark blue bottom-right split in your image */
+  background: linear-gradient(135deg, #e62129 50%, #030a49 50%);
+  z-index: 1;
+}
+
+/* 2. Glassmorphism Content Wrapper */
+.settings-content-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 95%;
+  max-width: 1100px;
+  margin: 40px 20px;
+  padding: 40px;
+}
+
+.settings-header {
+  margin-bottom: 30px;
+}
+
+h1.settings-title {
+    color: white;
+}
+
+/* 3. Responsive Grid Layout */
+.settings-main-layout {
+  display: flex;
+  flex-wrap: wrap; /* Allows stacking on mobile */
+  gap: 30px;
+  justify-content: space-between;
+}
+
+.settings-column {
+  flex: 1;
+  min-width: 320px; /* Forces stack on screens smaller than ~700px */
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* 4. Card Styling */
+.settings-card {
+  background: white;
+  padding: 30px;
+  border-radius: 30px; /* Smooth rounded corners from image */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.settings-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.sub-text {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* 5. Switch & Toggle Styling */
+.notif-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.status-indicator {
+  display: flex;
+  gap: 15px;
+  font-size: 14px;
+}
+
+.text-on {
+    color: #009dff;
+    font-weight: bold;
+}
+.text-off { color: #9e9e9e; }
+
+.settings-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.settings-switch input { opacity: 0; width: 0; height: 0; }
+
+.settings-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.settings-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px; width: 18px;
+  left: 3px; bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .settings-slider { background-color: #007bff; }
+input:checked + .settings-slider:before { transform: translateX(26px); }
+
+/* 6. Input Styling */
+.settings-input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  font-size: 14px;
+  outline: none;
+}
+
+/* 7. Button Variations */
+
+/* Logout Button (Solid Blue) */
+.btn-logout-settings {
+  background-color: #00a2ff;
+  color: white;
+  border: none;
+  padding: 10px 45px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 15px;
+  box-shadow: 0 4px 10px rgba(0, 162, 255, 0.3);
+}
+
+/* Delete Account (Red) */
+.btn-delete-account {
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 14px;
+  border-radius: 15px;
+  font-weight: 700;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+/* Save Changes (Cyan/Blue Gradient) */
+.btn-save-changes {
+  background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+  color: white;
+  border: none;
+  padding: 12px 35px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 114, 255, 0.3);
+}
+
+/* Discard Button (White/Border) */
+.btn-discard-settings {
+  background: white;
+  color: #444;
+  border: 1px solid #ccc;
+  padding: 12px 35px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.settings-action-footer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* 8. Profile Card Specifics */
+.profile-card-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.profile-avatar-border {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.profile-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-display-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+  margin: 10px 0;
+}
+
+/* Hover States */
+button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  transition: 0.2s;
+}
+
+/* Responsive Tablet/Mobile Fixes */
+@media (max-width: 768px) {
+  .settings-content-wrapper {
+    padding: 20px;
+    margin: 20px 10px;
+  }
+  
+  .settings-action-footer {
+    flex-direction: column;
+  }
+  
+  .btn-save-changes, .btn-discard-settings {
+    width: 100%;
+  }
+}
+/* 9. Notification Toast (Upper Right) */
+.notification-toast {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  z-index: 9999; /* Ensure it stays above everything */
+  padding: 15px 25px;
+  border-radius: 12px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Success State (Green) */
+.notification-toast.success {
+  background-color: #00c853; 
+  border-left: 6px solid #007e33;
+}
+
+/* Error State (Red) */
+.notification-toast.error {
+  background-color: #ff3547;
+  border-left: 6px solid #cc0000;
+}
+
+.toast-icon {
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+/* Slide-in animation from the right */
+@keyframes slideInRight {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Ensure the wrapper doesn't clip the notification */
+.settings-page {
+  overflow: visible !important; 
+}

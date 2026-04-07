@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* --- Layout: Prevent full page scroll --- */
+.activity-log-page {
+  background-color: #002b7f;
+  height: 100vh; /* Lock height to viewport */
+  padding: 30px 50px;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent body scroll */
+}
+
+.log-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-shrink: 0; /* Keep header size constant */
+}
+
+.back-button {
+  background: none; border: none; color: white;
+  font-size: 26px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; gap: 15px;
+}
+
+/* --- Toggle --- */
+.view-toggle-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 5px; border-radius: 12px; display: flex; gap: 5px;
+}
+
+.toggle-btn {
+  background: none; border: none; color: rgba(255, 255, 255, 0.7);
+  padding: 8px 20px; border-radius: 8px; cursor: pointer;
+  font-weight: 600; transition: all 0.3s ease;
+}
+
+.toggle-btn.active {
+  background: white; color: #002b7f;
+}
+
+/* --- Table Card: Fixed size --- */
+.log-container-card {
+  background: white; 
+  border-radius: 25px; 
+  padding: 0; /* padding moved to inner for scroll spacing */
+  border: 5px solid #cc0000; 
+  flex: 1; /* Stretch to fill available height */
+  overflow: hidden; /* Clip contents */
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- THE SCROLLABLE WRAPPER --- */
+.table-wrapper-inner {
+  flex: 1;
+  overflow-y: auto; 
+  overflow-x: auto;
+  padding: 0 20px 20px 20px;
+  scrollbar-gutter: stable;
+}
+
+/* Scrollbar Style */
+.table-wrapper-inner::-webkit-scrollbar {
+  width: 8px;
+}
+.table-wrapper-inner::-webkit-scrollbar-track {
+  background: #f8f8f8;
+}
+.table-wrapper-inner::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.activity-table { 
+  width: 100%; 
+  border-collapse: collapse; 
+  table-layout: fixed; 
+  min-width: 1100px; 
+}
+
+/* Column Widths */
+.col-no { width: 60px; }
+.col-officer { width: 220px; }
+.col-date { width: 110px; }
+.col-time { width: 160px; } 
+.col-purpose { width: auto; } 
+.col-status  { width: 140px; }
+.col-action { width: 220px; }
+
+.activity-table th {
+  position: sticky; 
+  top: 0; 
+  background: white; /* Sticky header background */
+  padding: 20px 10px; 
+  font-size: 13px; 
+  text-transform: uppercase;
+  text-align: center;
+  z-index: 2;
+  border-bottom: 2px solid #eee;
+}
+
+.activity-table td {
+  padding: 15px 10px; 
+  border-bottom: 1px solid #eee; 
+  text-align: center; 
+  font-size: 13px;
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  white-space: nowrap;
+}
+
+.officer-name-cell { font-weight: 600; text-align: center !important; padding-left: 0; }
+.purpose-cell { font-style: italic; color: #666; text-align: center !important; }
+
+/* Status Labels */
+.status-label-text {
+  font-weight: 700; padding: 6px 14px; border-radius: 6px; font-size: 10px;
+  text-transform: uppercase; display: inline-flex; align-items: center;
+  gap: 5px; min-width: 100px; justify-content: center;
+}
+.status-label-text.done { background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.status-label-text.cancelled { background-color: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+
+/* Action Buttons */
+.action-btns-wrapper { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.remark-btn { background: #b1b1b1; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; }
+.edit-btn-icon { color: #3182ce; font-size: 18px; cursor: pointer; background: none; border: none; }
+.more-actions-btn { background: none; border: none; color: #666; font-size: 18px; cursor: pointer; }
+
+/* --- MANAGE ACTIVITY MODAL --- */
+.action-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5); display: flex;
+  align-items: center; justify-content: center; z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.action-choice-card {
+  background: white; width: 480px; padding: 40px;
+  border-radius: 30px; text-align: center; position: relative;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.close-action-btn {
+  position: absolute; top: 20px; right: 20px;
+  background: #f1f1f1; border: none; border-radius: 50%;
+  width: 30px; height: 30px; cursor: pointer;
+}
+
+.choice-buttons { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
+
+.choice-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 15px; border-radius: 16px; background: white;
+  cursor: pointer; border: 2px solid #f0f0f0; transition: all 0.3s ease;
+}
+
+.choice-icon { font-size: 30px; margin-bottom: 10px; }
+.choice-text strong { display: block; font-size: 18px; }
+.choice-text small { font-size: 12px; opacity: 0.8; }
+
+/* --- COLOR THEME ON HOVER --- */
+.choice-btn.archive .choice-icon { color: #22c55e; }
+.choice-btn.archive:hover { background-color: #22c55e; border-color: #16a34a; color: white; }
+
+.choice-btn.cancel .choice-icon { color: #f97316; }
+.choice-btn.cancel:hover { background-color: #f97316; border-color: #ea580c; color: white; }
+
+.choice-btn.delete .choice-icon { color: #ef4444; }
+.choice-btn.delete:hover { background-color: #ef4444; border-color: #dc2626; color: white; }
+
+.choice-btn:hover .choice-icon,
+.choice-btn:hover .choice-text small { color: white !important; }
+
+/* Reasons Grid */
+.reasons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+.reason-select-btn { padding: 15px; border: 1px solid #eee; border-radius: 12px; background: #f9f9f9; cursor: pointer; font-weight: 600; transition: 0.2s; }
+.reason-select-btn:hover { background: #002b7f; color: white; }
+
+.reason-select-btn.other-btn { border: 2px dashed #ccc; background: #fff; color: #888; }
+.reason-select-btn.other-btn:hover { border-style: solid; border-color: #002b7f; color: white; }
+
+/* Custom Reason Input */
+.custom-reason-container { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
+.custom-reason-input { width: 100%; height: 100px; padding: 15px; border-radius: 15px; border: 2px solid #eee; font-family: 'Poppins', sans-serif; font-size: 14px; resize: none; outline: none; transition: border-color 0.3s; }
+.custom-reason-input:focus { border-color: #002b7f; }
+
+.submit-custom-btn { background: #002b7f; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.submit-custom-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.back-to-options { margin-top: 25px; background: none; border: none; color: #002b7f; text-decoration: underline; cursor: pointer; font-weight: 600; }
+
+/* Minutes Button Styling */
+.minutes-btn {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.minutes-btn:hover {
+  background-color: #0369a1;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.action-btns-wrapper { 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 10px; 
+}
+
+.empty-row-container td {
+  padding: 100px 0;
+  color: #888;
+  font-style: italic;
+}
+
+.log-container-card {
+  background: white; 
+  border-radius: 25px; 
+  padding: 0;
+  border: 5px solid #cc0000;
+  flex: 1; 
+  overflow: hidden; 
+  display: flex;
+  flex-direction: column;
+}

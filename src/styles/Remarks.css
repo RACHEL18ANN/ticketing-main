@@ -1,0 +1,170 @@
+/* --- Main Container --- */
+.remarks-container {
+    padding: 40px;
+    background-color: #f0f2f5; 
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* --- Uniform Notification Toast (Green/Red) --- */
+.notification-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    animation: slideIn 0.3s ease-out;
+}
+
+.notification-toast.success {
+    background-color: #2e7d32;
+}
+
+.notification-toast.error {
+    background-color: #d32f2f;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* --- Header Section --- */
+.remarks-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 88%;
+    margin: 0 auto 25px auto;
+}
+
+.remarks-header h1 {
+    color: #002d5b;
+    font-size: 24px;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+}
+
+.btn-primary {
+    background-color: #002d5b;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background: white;
+    border: 1px solid #dadce0;
+    color: #3c4043;
+    padding: 10px 24px;
+    margin-right: 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* --- Editor Paper Area --- */
+.editor-paper {
+    background: white;
+    max-width: 88%; 
+    margin: 0 auto;
+    padding: 60px 80px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    min-height: 1000px;
+}
+
+.remark-title-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #f1f3f4;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 28px;
+    margin-bottom: 10px;
+    padding: 10px 0;
+    outline: none;
+    font-weight: bold;
+}
+
+/* --- TOOLBAR & HIGHLIGHT FIX --- */
+.rsw-toolbar {
+    border: none !important;
+    border-bottom: 1px solid #eee !important;
+    padding: 8px 0 !important;
+    background: white !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    margin-bottom: 20px !important;
+}
+
+/* Base button styling - keeping them perfectly square */
+.rsw-btn {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 6px !important;
+    width: 34px !important;
+    height: 34px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    padding: 0 !important; 
+    transition: all 0.2s ease !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+}
+
+/* Icons inside the buttons */
+.rsw-btn svg {
+    width: 18px !important;
+    height: 18px !important;
+    fill: #444 !important;
+}
+
+.rsw-btn:hover {
+    background-color: #f1f3f4 !important;
+}
+
+/* THE HIGHLIGHT STATE - When the tool is active */
+.rsw-btn[data-active="true"] {
+    background-color: #e8f0fe !important; /* Soft Blue */
+    border: 1px solid #c2d7ff !important;
+}
+
+.rsw-btn[data-active="true"] svg {
+    fill: #1a73e8 !important; /* Blue Icon */
+}
+
+/* Vertical Separator line */
+.rsw-separator {
+    width: 1px !important;
+    height: 20px !important;
+    background: #e0e0e0 !important;
+    margin: 0 8px !important;
+    display: inline-block !important;
+}
+
+/* --- Content Area (Times New Roman Force) --- */
+.rsw-ce {
+    font-family: 'Times New Roman', Times, serif !important;
+    font-size: 12pt !important;
+    line-height: 1.6 !important;
+    outline: none !important;
+    padding-top: 10px !important;
+    min-height: 700px;
+}
+
+/* Fix for lists */
+.rsw-ce ul { list-style-type: disc !important; padding-left: 30px !important; }
+.rsw-ce ol { list-style-type: decimal !important; padding-left: 30px !important; }

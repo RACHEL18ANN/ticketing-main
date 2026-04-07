@@ -1,0 +1,79 @@
+/* ===== GLOBAL TOAST NOTIFICATION ===== */
+.global-toast-container {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 10000; /* High z-index to stay above everything */
+    min-width: 320px;
+    max-width: 450px;
+    animation: slideInRight 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.toast-banner {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    border-left: 6px solid #48bb78; /* Primary accent */
+    gap: 12px;
+}
+
+/* Success vs Error Type Logic */
+.global-toast-container.success .toast-banner {
+    border-left-color: #48bb78;
+}
+
+.global-toast-container.error .toast-banner {
+    border-left-color: #f56565;
+}
+
+.toast-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.global-toast-container.success .toast-icon {
+    color: #48bb78;
+}
+
+.global-toast-container.error .toast-icon {
+    color: #f56565;
+}
+
+.toast-msg-text {
+    flex: 1;
+    font-size: 13px;
+    color: #2d3748;
+    font-weight: 500;
+    line-height: 1.5;
+    white-space: pre-line; /* Allows the \n in App.js to work */
+}
+
+.toast-close-x {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #a0aec0;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 0 4px 5px;
+    transition: color 0.2s;
+}
+
+.toast-close-x:hover {
+    color: #4a5568;
+}
+
+/* Single optimized animation */
+@keyframes slideInRight {
+    from {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
