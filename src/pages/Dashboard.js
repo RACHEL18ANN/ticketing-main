@@ -9,42 +9,12 @@ const Dashboard = ({ user, notifications, onMarkAsRead, onClearAll }) => {
   const [showPanel, setShowPanel] = useState(false);
   const [hearings, setHearings] = useState([]);
   
-  // Real-time Date and Time State
-  const [dateTime, setDateTime] = useState(new Date());
-
   // Report section state
   const currentYear = new Date().getFullYear();
   const [selectedMonth, setSelectedMonth] = useState("March");
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [reportData, setReportData] = useState([]);
   
-  // Update time every second to show seconds like the photo
-  useEffect(() => {
-    const timer = setInterval(() => setDateTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const getTimeParts = (date) => {
-    const hours = ((date.getHours() % 12) || 12).toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
-    const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
-    return { hours, minutes, seconds, ampm };
-  };
-
-  const formatMonth = (date) => {
-    return date.toLocaleDateString('en-US', { month: 'long' }).toUpperCase();
-  };
-
-  const formatFooterDate = (date) => {
-    return date.toLocaleDateString('en-US', {
-      weekday: 'short',
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric'
-    }).toUpperCase();
-  };
-
   // Name Logic
   const [currentName, setCurrentName] = useState(() => {
     if (user?.firstName) return user.firstName;
@@ -137,7 +107,6 @@ const Dashboard = ({ user, notifications, onMarkAsRead, onClearAll }) => {
   };
 
   const unreadCount = notifications.filter(n => !n.isRead).length;
-  const timeParts = getTimeParts(dateTime);
 
   return (
     <div className="dashboard-container">
@@ -174,15 +143,6 @@ const Dashboard = ({ user, notifications, onMarkAsRead, onClearAll }) => {
           <div className="welcome-section">
             <h1>Hello {currentName},</h1>
             <p>What's on the agenda for today?</p>
-          </div>
-
-          <div className="datetime-display-card">
-            <div className="clock-time">
-              {timeParts.hours}:{timeParts.minutes}:{timeParts.seconds} {timeParts.ampm}
-            </div>
-            <div className="month-box">
-              <span className="footer-date">{formatFooterDate(dateTime)}</span>
-            </div>
           </div>
         </header>
 
