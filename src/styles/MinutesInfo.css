@@ -1,0 +1,486 @@
+/* MinutesInfo.css */
+
+/* --- 1. MAIN LAYOUT & APP UI --- */
+.min-info-container {
+    background-color: #f8fafc;
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+/* Fix: Strip min-height when generating PDF to prevent blank page 2 */
+.min-info-container.pdf-mode {
+    min-height: unset !important;
+    height: auto !important;
+    padding: 0 !important;
+    background: white !important;
+}
+
+.form-card {
+    background: white;
+    width: 100%;
+    max-width: 1100px;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 18px 28px;
+    border-radius: 18px;
+    box-shadow: 0 4px 20px rgba(3, 10, 73, 0.08); 
+    margin-bottom: 40px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-left h2 {
+    color: #030a49;
+    font-size: 1.3rem;
+    margin: 0;
+    font-weight: 800;
+}
+
+.back-arrow {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #030a49;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.back-arrow:hover {
+    transform: translateX(-3px);
+}
+
+/* Pagination pills */
+.pagination-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f1f5f9;
+    padding: 8px 20px;
+    border-radius: 30px;
+}
+
+.page-num {
+    font-size: 14px;
+    font-weight: 600;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 2px 8px;
+    transition: all 0.2s;
+}
+
+.page-num.active {
+    color: #ffde00;
+    font-weight: 800;
+    position: relative;
+}
+
+.page-num.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 20%;
+    width: 60%;
+    height: 3px;
+    background: #030a49;
+    border-radius: 10px;
+}
+
+.nav-arrow {
+    color: #cbd5e1;
+    font-size: 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.nav-arrow:hover {
+    color: #030a49;
+}
+
+/* --- 2. INPUT FIELDS & ALIGNMENT --- */
+.top-fields {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field-group label, .full-field label {
+    font-size: 12px;
+    font-weight: 800;
+    color: #030a49;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+input[type="text"], 
+input[type="date"], 
+input[type="time"], 
+input[type="number"],
+textarea, 
+select {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px;
+    background: #f8fafc;
+    width: 100%;
+    font-size: 0.95rem;
+    color: #1e293b;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #030a49;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(3, 10, 73, 0.06);
+}
+
+.full-field {
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 5px;
+    margin-bottom: 45px;
+    transition: border-color 0.3s;
+    width: 100%;
+}
+
+.full-field input {
+    border: none !important;
+    background: transparent !important;
+    font-size: 13px;
+    padding: 12px 0;
+    box-shadow: none !important;
+}
+
+/* --- 3. SECTIONS --- */
+.appearance-section, 
+.minutes-section {
+    border: 1px solid #f1f5f9;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 35px;
+    margin-bottom: 35px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.appearance-section h3, 
+.minutes-section h3 {
+    font-size: 1.15rem;
+    color: #030a49;
+    margin: 0;
+    font-weight: 800;
+}
+
+.party-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.column h4 {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.row-num {
+    font-weight: 800;
+    color: #030a49;
+    min-width: 20px;
+    font-size: 0.9rem;
+}
+
+.btn-delete-row {
+    background: transparent;
+    border: none;
+    color: #cbd5e1;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.btn-delete-row:hover {
+    color: #ef4444;
+    background: #fee2e2;
+}
+
+.add-name-btn {
+    width: 100%;
+    background: #030a49;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    margin-top: 15px;
+    cursor: pointer;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* --- 4. MINUTES & CONCERNS --- */
+.section-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.btn-payment {
+    background: #ef4444; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+textarea {
+    height: 250px;
+    resize: none;
+    width: 100%;
+}
+
+/* --- 5. ACTION BUTTONS & STATUS --- */
+.form-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.status-payment-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.button-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-preview {
+    background: #ffffff;
+    color: #1e293b;
+    padding: 12px 20px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-submit {
+    background: #ef4444;
+    color: white;
+    padding: 14px 50px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.btn-new-conf {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* --- 6. MODALS --- */
+.preview-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 2000;
+}
+
+.preview-modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 24px;
+    width: 90%;
+    max-width: 1100px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+button.btn-close-preview {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-iframe { flex: 1; border: 1px solid #e2e8f0; border-radius: 12px; margin: 15px 0; }
+
+.btn-confirm-download {
+    background: #10b981;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button.btn-back-edit {
+    background-color: #ef4444;
+    color: white;
+    font-weight: 600;
+    width: 130px;
+    border: none;
+    border-radius: 10px;
+}
+
+/* --- 7. PDF SPECIFIC STYLING --- */
+.pdf-only-header { display: none; }
+
+.is-generating-pdf {
+    padding: 20px !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-shadow: none !important;
+    font-family: "Times New Roman", Times, serif !important;
+    color: black !important;
+    min-height: unset !important; /* Fix for blank page 2 */
+}
+
+/* Centered formal header */
+.is-generating-pdf .pdf-only-header {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.is-generating-pdf .form-header,
+.is-generating-pdf .back-arrow,
+.is-generating-pdf .btn-new-conf,
+.is-generating-pdf .pagination-container,
+.is-generating-pdf .btn-delete-row,
+.is-generating-pdf .add-name-btn,
+.is-generating-pdf .btn-payment,
+.is-generating-pdf .form-bottom {
+    display: none !important;
+}
+
+.is-generating-pdf input, 
+.is-generating-pdf textarea {
+    border: none !important;
+    border-bottom: 1px solid black !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+
+.is-generating-pdf .appearance-section {
+    border: 1px solid black !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin-bottom: 20px !important;
+}
+
+.is-generating-pdf .party-columns {
+    display: flex !important;
+    gap: 0 !important;
+    border-top: 1px solid black;
+}
+
+.is-generating-pdf .column {
+    flex: 1;
+    padding: 10px !important;
+    border-right: 1px solid black;
+}
+
+.is-generating-pdf .column:last-child {
+    border-right: none;
+}
+
+/* Dynamic Text Styling for PDF */
+.pdf-dynamic-text {
+    display: none;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 11pt;
+    line-height: 1.5;
+    padding: 10px 0;
+    min-height: 10px;
+    color: black;
+}
+
+.is-generating-pdf .minutes-section textarea {
+    display: none !important;
+}
+
+.is-generating-pdf .pdf-dynamic-text {
+    display: block !important;
+}
+
+.is-generating-pdf .minutes-section {
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+}

@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+.activity-log-page {
+  background-color: #002b7f;
+  height: 100vh;
+  padding: 30px 50px;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.log-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 26px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.view-toggle-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 5px;
+  border-radius: 12px;
+  display: flex;
+  gap: 5px;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.toggle-btn.active { background: white; color: #002b7f; }
+
+.log-container-card {
+  background: white;
+  border-radius: 25px;
+  border: 5px solid #cc0000;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-wrapper-inner {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: visible !important;
+  padding: 0 25px 25px;
+}
+
+.activity-table { width: 100%; border-collapse: collapse; }
+
+.activity-table th {
+  position: sticky; top: 0; background: white; z-index: 10;
+  padding: 25px 15px; font-size: 13px; text-transform: uppercase;
+  color: #64748b; font-weight: 800; border-bottom: 2px solid #f1f5f9;
+}
+
+.activity-table td {
+  padding: 20px 15px; border-bottom: 1px solid #f1f5f9;
+  font-size: 14px; color: #1e293b; vertical-align: middle; text-align: center;
+}
+
+.col-officer, .col-purpose { text-align: left !important; }
+.col-action { overflow: visible !important; position: relative; }
+
+/* Status Pills */
+.status-pill {
+  font-weight: 700; font-size: 10px; text-transform: uppercase;
+  padding: 8px 14px; border-radius: 8px; display: inline-flex;
+  align-items: center; justify-content: center; min-width: 110px;
+}
+.status-pill.pending { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+.status-pill.done { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.status-pill.cancelled { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+
+/* Buttons */
+.active-action-group, .archive-actions-group {
+  display: flex; justify-content: center; align-items: center; gap: 8px;
+}
+
+.arch-btn {
+  background: #f8fafc; border: 1.5px solid #e2e8f0;
+  width: 38px; height: 38px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s; font-size: 16px;
+}
+
+.arch-btn.remark { color: #6366f1; background: #f5f3ff; border-color: #c4b5fd; }
+.arch-btn.minutes.empty { color: #3b82f6; background: #eff6ff; border-color: #93c5fd; }
+.arch-btn.minutes.exists { color: #059669; background: #ecfdf5; border-color: #10b981; }
+
+/* Cancelled/Disabled Logic */
+.arch-btn.minutes.disabled {
+  opacity: 0.3; pointer-events: none !important; cursor: not-allowed;
+  filter: grayscale(1); background: #f1f5f9 !important; color: #94a3b8 !important;
+}
+
+.arch-btn.edit { color: #f59e0b; }
+.arch-btn.delete { color: #ef4444; }
+
+.arch-btn:hover:not(.disabled) {
+  transform: translateY(-2px); background: #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* 3-Dots Menu */
+.dot-menu-container { position: relative; overflow: visible !important; }
+
+.opt-btn-trigger {
+  background: #f1f5f9; border: none; border-radius: 8px;
+  width: 38px; height: 38px; display: flex; align-items: center;
+  justify-content: center; cursor: pointer; color: #64748b;
+}
+
+.dropdown-menu.show {
+  display: block !important; position: absolute; right: 0; top: 42px;
+  background: white; min-width: 150px; border-radius: 12px;
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.15); z-index: 9999; border: 1px solid #e2e8f0;
+  padding: 5px;
+}
+
+.drop-item {
+  width: 100%; padding: 10px 15px; border: none; background: none;
+  display: flex; align-items: center; gap: 10px; font-family: inherit;
+  font-size: 13px; font-weight: 500; color: #475569; cursor: pointer; border-radius: 8px;
+}
+
+.drop-item:hover { background: #f8fafc; }
+.drop-item.archive:hover { color: #166534; background: #f0fdf4; }
+.drop-item.cancel:hover { color: #b91c1c; background: #fef2f2; }
+.drop-item.delete:hover { color: #ef4444; background: #fef2f2; }
+
+/* Modal */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 43, 127, 0.4); backdrop-filter: blur(4px);
+  display: flex; justify-content: center; align-items: center; z-index: 10000;
+}
+
+.cancel-modal {
+  background: white; width: 400px; padding: 30px; border-radius: 20px;
+}
+
+.reason-options { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+
+.reason-label {
+  display: flex; align-items: center; gap: 10px; font-size: 14px;
+  padding: 10px; border-radius: 10px; border: 1px solid #f1f5f9; cursor: pointer;
+}
+
+.other-reason-input {
+  width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 20px;
+}
+
+.modal-footer { display: flex; justify-content: flex-end; gap: 10px; }
+.modal-btn-secondary { background: #f1f5f9; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; }
+.modal-btn-primary { background: #cc0000; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; }
+
+.empty-msg { padding: 80px; text-align: center; color: #94a3b8; font-style: italic; }
+
+.status-pill.in-session {
+    background-color: #e6fffa;
+    color: #047481;
+    border: 1px solid #047481;
+    font-weight: bold;
+    animation: pulse 2s infinite;
+}
+
+.status-pill.pending {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}

@@ -1,0 +1,242 @@
+/* --- LAYOUT & BASE --- */
+.schedule-outer-container {
+    padding: 30px;
+    background-color: #f3f4f6;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    transition: padding-left 0.3s ease-in-out;
+}
+
+.schedule-outer-container.sidebar-closed {
+    padding-left: 30px;
+}
+
+/* HEADER STYLE */
+.schedule-header {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.header-left { display: flex; align-items: center; gap: 20px; }
+.header-text h1 { font-size: 22px; margin: 0; color: #111; font-weight: 700; }
+.header-text p { font-size: 13px; color: #666; margin: 0; }
+
+.back-circle-btn {
+    border: none;
+    background: #f3f4f6;
+    color: #03113d;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.create-sched-btn {
+    background: #a30000;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(163, 0, 0, 0.3);
+}
+
+/* CONTENT GRID - Updated to 1fr for flexibility */
+.schedule-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px; 
+    gap: 25px 30px;
+    align-items: start;
+    max-width: 1400px;
+}
+
+.left-column-wrapper { width: 100%; }
+.right-column-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    min-width: 380px;
+}
+
+/* FIXED HEIGHT LOGIC (COMPACT) */
+.fixed-card-height {
+    height: 420px; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.white-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
+}
+
+.card-title { font-size: 20px; font-weight: 700; color: #111; margin-bottom: 20px; }
+
+/* --- UPCOMING MEETINGS --- */
+.meetings-list.scrollable-agenda {
+    flex: 1; 
+    overflow-y: auto !important; 
+    padding-right: 12px;
+    margin-right: -5px;
+    scroll-behavior: smooth;
+    display: flex;
+    flex-direction: column;
+}
+
+.meetings-list.scrollable-agenda::-webkit-scrollbar { width: 6px; }
+.meetings-list.scrollable-agenda::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+.meetings-list.scrollable-agenda::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+.meeting-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-bottom: 25px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.meeting-row::after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #e2e8f0;
+    z-index: 0;
+}
+
+.time-label { 
+    font-size: 12px; 
+    color: #94a3b8; 
+    min-width: 165px; 
+    font-weight: 500;
+    padding: 2px 10px 2px 0;
+    background-color: #ffffff;
+    position: relative;
+    z-index: 2;
+}
+
+.meeting-blue-pill {
+    flex: 1;
+    background: #03113d; 
+    border-radius: 12px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-left: 6px solid #facc15; 
+}
+
+.pill-main-content { display: flex; align-items: center; }
+
+.meeting-date-badge {
+    background: #fefce8;
+    padding: 8px 15px;
+    border-radius: 25px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.meeting-date-badge span { font-size: 11px; font-weight: 800; color: #03113d; text-transform: uppercase; }
+.meeting-date-badge strong { font-size: 16px; color: #03113d; }
+
+.meeting-info h3 { margin: 0; font-size: 17px; font-weight: 600; color: #ffffff; }
+.meeting-info p { margin: 4px 0 0; font-size: 13px; color: #cbd5e1; display: flex; align-items: center; gap: 6px; }
+
+.view-pill-btn {
+    background: #475569;
+    color: #ffffff;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.view-pill-btn:hover { background: #334155; }
+
+/* --- CALENDAR MINI CARD --- */
+.cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.cal-nav h3 { font-size: 18px; font-weight: 700; color: #03113d; }
+.cal-grid-mini { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; }
+.cal-day-label { font-size: 12px; color: #94a3b8; font-weight: 600; padding-bottom: 8px; }
+.cal-date { padding: 8px 0; font-size: 13px; cursor: pointer; border-radius: 8px; color: #334155; }
+.cal-date.selected-highlight { background: #03113d !important; color: white !important; font-weight: bold; }
+
+.today-dot { position: relative; }
+.today-dot::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: #a30000;
+    border-radius: 50%;
+}
+
+.no-meetings-placeholder {
+    margin: auto; 
+    color: #94a3b8;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* --- ACTIVITY LOG TRIGGER --- */
+.activity-log-trigger-card {
+    background: #03113d;
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(3, 17, 61, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.activity-log-trigger-card:hover { transform: translateY(-2px); }
+.trigger-content { display: flex; align-items: center; gap: 15px; }
+.icon-wrapper { background: rgba(255, 255, 255, 0.1); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; }
+.text-wrapper .label { display: block; color: #94a3b8; font-size: 10px; text-transform: uppercase; }
+.text-wrapper h3 { color: white; margin: 0; font-size: 16px; }
+.arrow-badge { color: #94a3b8; }
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 1200px) {
+    .schedule-content-grid {
+        grid-template-columns: 1fr;
+    }
+    .right-column-wrapper {
+        min-width: 100%;
+    }
+}
