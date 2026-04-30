@@ -4,6 +4,12 @@ import '../styles/Dashboard.css';
 import { FaTimes, FaDownload } from 'react-icons/fa';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList, LineChart, Line } from 'recharts';
 
+// FIX 3: Moved outside the component to prevent React Hook dependency warnings
+const monthNames = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 const Dashboard = ({ user, notifications, onMarkAsRead, onClearAll }) => {
   const navigate = useNavigate();
   const [showPanel, setShowPanel] = useState(false);
@@ -13,10 +19,6 @@ const Dashboard = ({ user, notifications, onMarkAsRead, onClearAll }) => {
   const [isVisible, setIsVisible] = useState(false);
   
   const now = new Date();
-  const monthNames = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
 
   const [selectedMonth, setSelectedMonth] = useState(monthNames[now.getMonth()]);
   const [selectedYear, setSelectedYear] = useState(now.getFullYear());
@@ -111,119 +113,103 @@ const Dashboard = ({ user, notifications, onMarkAsRead, onClearAll }) => {
   }, []);
 
   // --- UPDATE ALL EARNINGS DATA ---
+  // FIX 1: Moved all helper functions INSIDE the useEffect to satisfy react-hooks/exhaustive-deps
   useEffect(() => {
-    const updateAllEarnings = () => {
-      updateDailyEarnings();
-      updateWeeklyEarnings();
-      updateMonthlyEarnings();
-      updateYearlyEarnings();
+    // --- DAILY: Show amount every single day of the month ---
+    const updateDailyEarnings = () => {
+      let dailyData = Array.from({ length: 31 }, (_, i) => ({ day: i + 1, income: 0 }));
+      let totalDaily = 0;
+      
+      if (fullEarningsData[earningsViewYear] && fullEarningsData[earningsViewYear][earningsViewMonth]) {
+        dailyData = fullEarningsData[earningsViewYear][earningsViewMonth].days;
+        totalDaily = fullEarningsData[earningsViewYear][earningsViewMonth].total;
+      }
+      
+      setDailyTrend(dailyData);
+      setTotalEarnings(prev => ({ ...prev, daily: totalDaily }));
     };
 
-    updateAllEarnings();
-  }, [fullEarningsData, earningsViewYear, earningsViewMonth]);
-
-  // --- DAILY: Show amount every single day of the month ---
-  const updateDailyEarnings = () => {
-    let dailyData = Array.from({ length: 31 }, (_, i) => ({ day: i + 1, income: 0 }));
-    let totalDaily = 0;
-    
-    if (fullEarningsData[earningsViewYear] && fullEarningsData[earningsViewYear][earningsViewMonth]) {
-      dailyData = fullEarningsData[earningsViewYear][earningsViewMonth].days;
-      totalDaily = fullEarningsData[earningsViewYear][earningsViewMonth].total;
-    }
-    
-    setDailyTrend(dailyData);
-    // Daily total is the entire month's total since we're showing all days
-    setTotalEarnings(prev => ({ ...prev, daily: totalDaily }));
-  };
-
-  // --- WEEKLY: Show amount every week of the month ---
-  const updateWeeklyEarnings = () => {
-    const weeklyData = [];
-    let totalWeekly = 0;
-    
-    if (fullEarningsData[earningsViewYear] && fullEarningsData[earningsViewYear][earningsViewMonth]) {
-      const monthDays = fullEarningsData[earningsViewYear][earningsViewMonth].days;
+    // --- WEEKLY: Show amount every week of the month ---
+    const updateWeeklyEarnings = () => {
+      const weeklyData = [];
+      let totalWeekly = 0;
       
-      // Get the actual number of days in the selected month
-      const daysInMonth = new Date(earningsViewYear, earningsViewMonth + 1, 0).getDate();
-      
-      // Calculate weeks (Week 1: days 1-7, Week 2: 8-14, Week 3: 15-21, Week 4: 22-28, Week 5: 29+)
-      const weekRanges = [
-        { week: 'Week 1', start: 1, end: Math.min(7, daysInMonth) },
-        { week: 'Week 2', start: 8, end: Math.min(14, daysInMonth) },
-        { week: 'Week 3', start: 15, end: Math.min(21, daysInMonth) },
-        { week: 'Week 4', start: 22, end: Math.min(28, daysInMonth) }
-      ];
-      
-      // Add Week 5 if the month has more than 28 days
-      if (daysInMonth > 28) {
-        weekRanges.push({ week: 'Week 5', start: 29, end: daysInMonth });
-      }
-      
-      weekRanges.forEach(range => {
-        let weekIncome = 0;
-        for (let day = range.start; day <= range.end; day++) {
-          if (monthDays[day - 1]) {
-            weekIncome += monthDays[day - 1].income;
-          }
+      if (fullEarningsData[earningsViewYear] && fullEarningsData[earningsViewYear][earningsViewMonth]) {
+        const monthDays = fullEarningsData[earningsViewYear][earningsViewMonth].days;
+        const daysInMonth = new Date(earningsViewYear, earningsViewMonth + 1, 0).getDate();
+        
+        const weekRanges = [
+          { week: 'Week 1', start: 1, end: Math.min(7, daysInMonth) },
+          { week: 'Week 2', start: 8, end: Math.min(14, daysInMonth) },
+          { week: 'Week 3', start: 15, end: Math.min(21, daysInMonth) },
+          { week: 'Week 4', start: 22, end: Math.min(28, daysInMonth) }
+        ];
+        
+        if (daysInMonth > 28) {
+          weekRanges.push({ week: 'Week 5', start: 29, end: daysInMonth });
         }
-        weeklyData.push({
-          week: range.week,
-          income: weekIncome
+        
+        weekRanges.forEach(range => {
+          let weekIncome = 0;
+          for (let day = range.start; day <= range.end; day++) {
+            if (monthDays[day - 1]) {
+              weekIncome += monthDays[day - 1].income;
+            }
+          }
+          weeklyData.push({ week: range.week, income: weekIncome });
+          totalWeekly += weekIncome;
         });
-        totalWeekly += weekIncome;
-      });
-    }
-    
-    setWeeklyTrend(weeklyData);
-    setTotalEarnings(prev => ({ ...prev, weekly: totalWeekly }));
-  };
-
-  // --- MONTHLY: Show total amount every month ---
-  const updateMonthlyEarnings = () => {
-    const monthlyData = [];
-    let totalMonthly = 0;
-    
-    if (fullEarningsData[earningsViewYear]) {
-      for (let month = 0; month < 12; month++) {
-        const monthTotal = fullEarningsData[earningsViewYear][month].total;
-        monthlyData.push({
-          month: monthNames[month],
-          income: monthTotal
-        });
-        totalMonthly += monthTotal;
       }
-    }
-    
-    setMonthlyTrend(monthlyData);
-    setTotalEarnings(prev => ({ ...prev, monthly: totalMonthly }));
-  };
+      
+      setWeeklyTrend(weeklyData);
+      setTotalEarnings(prev => ({ ...prev, weekly: totalWeekly }));
+    };
 
-  // --- YEARLY: Show yearly amount ---
-  const updateYearlyEarnings = () => {
-    const yearlyData = [];
-    let totalYearly = 0;
-    
-    for (let year = 2020; year <= 2030; year++) {
-      let yearTotal = 0;
-      if (fullEarningsData[year]) {
+    // --- MONTHLY: Show total amount every month ---
+    const updateMonthlyEarnings = () => {
+      const monthlyData = [];
+      let totalMonthly = 0;
+      
+      if (fullEarningsData[earningsViewYear]) {
         for (let month = 0; month < 12; month++) {
-          if (fullEarningsData[year][month]) {
-            yearTotal += fullEarningsData[year][month].total;
-          }
+          const monthTotal = fullEarningsData[earningsViewYear][month].total;
+          monthlyData.push({ month: monthNames[month], income: monthTotal });
+          totalMonthly += monthTotal;
         }
       }
-      yearlyData.push({
-        year: year,
-        income: yearTotal
-      });
-      totalYearly += yearTotal;
-    }
-    
-    setYearlyTrend(yearlyData);
-    setTotalEarnings(prev => ({ ...prev, yearly: totalYearly }));
-  };
+      
+      setMonthlyTrend(monthlyData);
+      setTotalEarnings(prev => ({ ...prev, monthly: totalMonthly }));
+    };
+
+    // --- YEARLY: Show yearly amount ---
+    const updateYearlyEarnings = () => {
+      const yearlyData = [];
+      let totalYearly = 0;
+      
+      for (let year = 2020; year <= 2030; year++) {
+        let yearTotal = 0;
+        if (fullEarningsData[year]) {
+          for (let month = 0; month < 12; month++) {
+            if (fullEarningsData[year][month]) {
+              yearTotal += fullEarningsData[year][month].total;
+            }
+          }
+        }
+        yearlyData.push({ year: year, income: yearTotal });
+        totalYearly += yearTotal;
+      }
+      
+      setYearlyTrend(yearlyData);
+      setTotalEarnings(prev => ({ ...prev, yearly: totalYearly }));
+    };
+
+    // Execute them all
+    updateDailyEarnings();
+    updateWeeklyEarnings();
+    updateMonthlyEarnings();
+    updateYearlyEarnings();
+  }, [fullEarningsData, earningsViewYear, earningsViewMonth]);
 
   useEffect(() => {
     const processGraphData = () => {
@@ -288,11 +274,14 @@ const Dashboard = ({ user, notifications, onMarkAsRead, onClearAll }) => {
         for (let month = 0; month < 12; month++) {
           if (fullEarningsData[year][month]) {
             const monthData = fullEarningsData[year][month];
-            monthData.days.forEach(dayData => {
+            
+            // FIX 2: Replaced .forEach() with a standard for loop to eliminate "no-loop-func" warning
+            for (let d = 0; d < monthData.days.length; d++) {
+              const dayData = monthData.days[d];
               if (dayData.income > 0) {
                 csvContent += `${year},${monthNames[month]},${dayData.day},${dayData.income}\n`;
               }
-            });
+            }
           }
         }
       }
@@ -346,20 +335,11 @@ const Dashboard = ({ user, notifications, onMarkAsRead, onClearAll }) => {
   // Get chart data based on selected frequency
   const getChartData = () => {
     switch(earningsFrequency.toLowerCase()) {
-      case 'daily':
-        return dailyTrend;
-      
-      case 'weekly':
-        return weeklyTrend;
-      
-      case 'monthly':
-        return monthlyTrend;
-      
-      case 'yearly':
-        return yearlyTrend;
-      
-      default:
-        return monthlyTrend;
+      case 'daily': return dailyTrend;
+      case 'weekly': return weeklyTrend;
+      case 'monthly': return monthlyTrend;
+      case 'yearly': return yearlyTrend;
+      default: return monthlyTrend;
     }
   };
 
@@ -396,48 +376,33 @@ const Dashboard = ({ user, notifications, onMarkAsRead, onClearAll }) => {
   // Get the current earnings total based on selected frequency
   const getCurrentEarningsTotal = () => {
     switch(earningsFrequency.toLowerCase()) {
-      case 'daily': 
-        return totalEarnings.daily;
-      case 'weekly': 
-        return totalEarnings.weekly;
-      case 'monthly': 
-        return totalEarnings.monthly;
-      case 'yearly': 
-        return totalEarnings.yearly;
-      default: 
-        return totalEarnings.monthly;
+      case 'daily': return totalEarnings.daily;
+      case 'weekly': return totalEarnings.weekly;
+      case 'monthly': return totalEarnings.monthly;
+      case 'yearly': return totalEarnings.yearly;
+      default: return totalEarnings.monthly;
     }
   };
 
   // Get chart title based on frequency and selected period
   const getChartTitle = () => {
     switch(earningsFrequency.toLowerCase()) {
-      case 'daily':
-        return `Daily Income (${monthNames[earningsViewMonth]} ${earningsViewYear})`;
-      case 'weekly':
-        return `Weekly Income (${monthNames[earningsViewMonth]} ${earningsViewYear})`;
-      case 'monthly':
-        return `Monthly Income (${earningsViewYear})`;
-      case 'yearly':
-        return 'Yearly Income (2020-2030)';
-      default:
-        return 'Income Report';
+      case 'daily': return `Daily Income (${monthNames[earningsViewMonth]} ${earningsViewYear})`;
+      case 'weekly': return `Weekly Income (${monthNames[earningsViewMonth]} ${earningsViewYear})`;
+      case 'monthly': return `Monthly Income (${earningsViewYear})`;
+      case 'yearly': return 'Yearly Income (2020-2030)';
+      default: return 'Income Report';
     }
   };
 
   // Get the appropriate X axis interval
   const getXAxisInterval = () => {
     switch(earningsFrequency.toLowerCase()) {
-      case 'daily': 
-        return Math.floor(31 / 10);
-      case 'weekly': 
-        return 0;
-      case 'monthly': 
-        return 0;
-      case 'yearly': 
-        return 1;
-      default: 
-        return 0;
+      case 'daily': return Math.floor(31 / 10);
+      case 'weekly': return 0;
+      case 'monthly': return 0;
+      case 'yearly': return 1;
+      default: return 0;
     }
   };
 
